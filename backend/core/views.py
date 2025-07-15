@@ -4,8 +4,10 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from django.core.mail import send_mail
-from .models import Service, Booking
+from rest_framework.permissions import IsAuthenticated
+from .models import Service, Booking, Employee
 from .serializers import ServiceSerializer, BookingSerializer
+from rest_framework.decorators import action
 
 User = get_user_model()
 
@@ -37,7 +39,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         send_mail(
             subject="Welcome to Urban Services!",
             message=f"Hello {user.username},\n\nThanks for registering with Urban Services. We're glad to have you!",
-            from_email="yourgmail@gmail.com",  # Replace with your actual email
+            from_email="yourgmail@gmail.com",  # Replace with your Gmail or SMTP
             recipient_list=[user.email],
             fail_silently=False,
         )
@@ -139,11 +141,48 @@ class ServiceDetailView(APIView):
             "grouped_subservices": grouped_subservices
         })
 
-# 🔹 Booking Create API
-class BookingCreateAPIView(APIView):
-    def post(self, request):
-        serializer = BookingSerializer(data=request.data)
-        if serializer.is_valid():
+# 🔹 Booking ViewSet with employee assignment
+class BookingViewSet(viewsets.ModelViewSet):
+    queryset = Booking.objects.all()
+    serializer_class = BookingSerializer
+
+    def perform_create(self, serializer):
+        service = serializer.validated_data['service']
+        available_employees = Employee.objects.filter(services=service, is_available=True)
+
+        if available_employees.exists():
+            employee = available_employees.first()
+            employee.is_available = False
+            employee.save()
+            serializer.save(employee=employee)
+        else:
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    # ✅ New API: Get bookings for logged-in employee
+    @action(detail=False, methods=['get'], url_path='my-assignments')
+    def my_assignments(self, request):
+        if request.user.role != 'employee':
+            return Response({"error": "Unauthorized"}, status=403)
+
+        bookings = Booking.objects.filter(employee__email=request.user.email)
+        serializer = self.get_serializer(bookings, many=True)
+        return Response(serializer.data)
+class EmployeeBookingViewSet(viewsets.ModelViewSet):
+    serializer_class = BookingSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        # Only return bookings assigned to the logged-in employee
+        return Booking.objects.filter(employee__email=self.request.user.email)
+
+    @action(detail=True, methods=["post"])
+    def update_status(self, request, pk=None):
+        booking = self.get_object()
+        status = request.data.get("status")
+
+        if status not in ["Accepted", "Completed", "Cancelled"]:
+            return Response({"error": "Invalid status"}, status=400)
+
+        booking.status = status
+        booking.save()
+        return Response({"message": f"Status updated to {status}"})

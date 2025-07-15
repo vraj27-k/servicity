@@ -16,23 +16,22 @@ const BookService = () => {
     address: '',
     date: '',
     time: ''
-    
-  });
-const [latLng, setLatLng] = useState(null);
-  useEffect(() => {
-  axios.get(`http://localhost:8000/api/services/${id}/`)
-    .then(res => {
-      setService(res.data);
 
-      // Restore selected subservices from localStorage cart
-      const cart = JSON.parse(localStorage.getItem("cart")) || [];
-      const match = cart.find(item => item.service_id === parseInt(id));
-      if (match) {
-        setSelected(match.subservices);
-      }
-    })
-    .catch(err => console.error("❌ Failed to fetch service", err));
-}, [id]);
+  });
+  useEffect(() => {
+    axios.get(`http://localhost:8000/api/services/${id}/`)
+      .then(res => {
+        setService(res.data);
+
+        // Restore selected subservices from localStorage cart
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const match = cart.find(item => item.service_id === parseInt(id));
+        if (match) {
+          setSelected(match.subservices);
+        }
+      })
+      .catch(err => console.error("❌ Failed to fetch service", err));
+  }, [id]);
 
 
   const toggleSubService = (subId) => {
@@ -51,12 +50,25 @@ const [latLng, setLatLng] = useState(null);
     return;
   }
 
-  // 👉 Store selected subservices in localStorage or pass via state
-  localStorage.setItem("selected_subservices", JSON.stringify(selected));
+  const cart = JSON.parse(localStorage.getItem("cart_services")) || [];
 
-  // 👉 Redirect to new booking detail page
+  const existingIndex = cart.findIndex(item => item.service_id === parseInt(id));
+
+  if (existingIndex !== -1) {
+    cart[existingIndex].subservices = selected;
+  } else {
+    cart.push({
+      service_id: parseInt(id),
+      subservices: selected,
+    });
+  }
+
+  localStorage.setItem("cart_services", JSON.stringify(cart));
+
   navigate(`/confirm-booking/${id}`);
 };
+
+
 
 
   const handleBooking = () => {

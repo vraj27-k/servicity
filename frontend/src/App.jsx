@@ -12,7 +12,7 @@ import UserServices from "./pages/UserServices";
 import AddServiceForm from "./pages/AddServiceModal";
 import BookService from "./pages/BookService";
 import ConfirmBooking from "./pages/ConfirmBooking";
-
+import EmployeeBookings from "./pages/EmployeeBookings";
 function App() {
   return (
     <Routes>
@@ -27,8 +27,9 @@ function App() {
       <Route path="/admin" element={<AdminDashboard />} />
       <Route path="/admin/add-service" element={<AddServiceForm />} />
       <Route path="/services" element={<UserServices />} />
- <Route path="/confirm-booking/:id" element={<ConfirmBooking />} />
-   
+  <Route path="/confirm-booking/:id" element={<ConfirmBooking />} />
+   <Route path="/employee-bookings" element={<EmployeeBookings />} />
+
 
     </Routes>
 

@@ -10,7 +10,7 @@ const Signup = () => {
     username: "",
     email: "",
     password: "",
-    role: "user", // default role
+    role: "user", // default
   });
 
   const [errorMsg, setErrorMsg] = useState("");
@@ -33,23 +33,30 @@ const Signup = () => {
         body: JSON.stringify(formData),
       });
 
-      const data = await response.json();
+      const text = await response.text(); // Try parsing response manually
 
-      if (response.ok) {
-        alert("✅ Signup successful! Please log in.");
-        navigate("/login");
-      } else {
-        if (data.username) {
-          setErrorMsg("❌ Username: " + data.username);
-        } else if (data.email) {
-          setErrorMsg("❌ Email: " + data.email);
+      try {
+        const data = JSON.parse(text); // Try parsing as JSON
+
+        if (response.ok) {
+          alert("✅ Signup successful! Please log in.");
+          navigate("/login");
         } else {
-          setErrorMsg("❌ Signup failed. Try again.");
+          if (data.username) {
+            setErrorMsg("❌ Username: " + data.username);
+          } else if (data.email) {
+            setErrorMsg("❌ Email: " + data.email);
+          } else {
+            setErrorMsg("❌ Signup failed. Try again.");
+          }
         }
+      } catch (jsonErr) {
+        console.error("❌ Non-JSON response received:", text);
+        setErrorMsg("❌ Server error. Please check your backend logs.");
       }
     } catch (error) {
       console.error("Signup Error:", error);
-      setErrorMsg("❌ Server error. Please try again later.");
+      setErrorMsg("❌ Unable to connect to the server.");
     }
   };
 
@@ -61,7 +68,9 @@ const Signup = () => {
           <h2 className="text-center text-success mb-4">Create Account</h2>
 
           {errorMsg && (
-            <div className="alert alert-danger text-center small py-2">{errorMsg}</div>
+            <div className="alert alert-danger text-center small py-2">
+              {errorMsg}
+            </div>
           )}
 
           <form onSubmit={handleSignup}>

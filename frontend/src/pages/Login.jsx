@@ -1,3 +1,4 @@
+// src/Login.jsx
 import React, { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
@@ -10,6 +11,8 @@ const Login = () => {
     password: "",
   });
 
+  const [errorMsg, setErrorMsg] = useState("");
+
   const handleChange = (e) => {
     setFormData((prev) => ({
       ...prev,
@@ -19,15 +22,17 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrorMsg("");
+
     try {
       const res = await axios.post("http://localhost:8000/api/login/", formData);
 
-      // ✅ Save user data
+      // ✅ Save session info
       localStorage.setItem("username", res.data.username);
       localStorage.setItem("role", res.data.role);
       localStorage.setItem("user_id", res.data.user_id);
 
-      // ✅ Redirect logic
+      // ✅ Redirect after login
       const redirectTo = localStorage.getItem("redirect_after_login");
       if (redirectTo) {
         localStorage.removeItem("redirect_after_login");
@@ -36,10 +41,11 @@ const Login = () => {
         const role = res.data.role;
         if (role === "admin") navigate("/admin-dashboard");
         else if (role === "employee") navigate("/employee-dashboard");
-        else navigate("/");
+        else navigate("/"); // regular user
       }
     } catch (err) {
-      alert("Login failed: " + (err.response?.data?.error || "Invalid credentials"));
+      const msg = err.response?.data?.error || "Invalid credentials";
+      setErrorMsg("❌ " + msg);
     }
   };
 
@@ -49,6 +55,11 @@ const Login = () => {
       <div className="d-flex align-items-center justify-content-center min-vh-100 bg-light">
         <div className="card shadow-sm p-4" style={{ maxWidth: "400px", width: "100%" }}>
           <h2 className="text-center text-primary mb-4">Login</h2>
+
+          {errorMsg && (
+            <div className="alert alert-danger text-center py-2 small">{errorMsg}</div>
+          )}
+
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
               <input
@@ -76,6 +87,7 @@ const Login = () => {
               Login
             </button>
           </form>
+
           <p className="text-center mt-4 mb-1 small">
             New user?{" "}
             <Link to="/signup" className="text-decoration-none text-primary fw-medium">

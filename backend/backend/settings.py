@@ -150,3 +150,5 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 CORS_ALLOW_ALL_ORIGINS = True
+# settings.py
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
