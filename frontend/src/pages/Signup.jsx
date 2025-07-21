@@ -1,136 +1,93 @@
-// src/Signup.jsx
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Navbar from "./components/Navbar";
+import React, { useState } from 'react';
+import axios from 'axios';
 
 const Signup = () => {
-  const navigate = useNavigate();
+  const [form, setForm] = useState({ username: '', email: '', password: '', role: 'user' });
 
-  const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
-    role: "user", // default
-  });
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-  const [errorMsg, setErrorMsg] = useState("");
-
-  const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  const handleSignup = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrorMsg("");
-
     try {
-      const response = await fetch("http://localhost:8000/api/signup/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-
-      const text = await response.text(); // Try parsing response manually
-
-      try {
-        const data = JSON.parse(text); // Try parsing as JSON
-
-        if (response.ok) {
-          alert("✅ Signup successful! Please log in.");
-          navigate("/login");
-        } else {
-          if (data.username) {
-            setErrorMsg("❌ Username: " + data.username);
-          } else if (data.email) {
-            setErrorMsg("❌ Email: " + data.email);
-          } else {
-            setErrorMsg("❌ Signup failed. Try again.");
-          }
-        }
-      } catch (jsonErr) {
-        console.error("❌ Non-JSON response received:", text);
-        setErrorMsg("❌ Server error. Please check your backend logs.");
-      }
-    } catch (error) {
-      console.error("Signup Error:", error);
-      setErrorMsg("❌ Unable to connect to the server.");
+      await axios.post('http://127.0.0.1:8000/api/register/', form);
+      alert("Signup successful");
+    } catch (err) {
+      console.error(err.response?.data || err.message);
+      alert("Signup failed. Please check console for errors.");
     }
   };
 
   return (
-    <>
-      <Navbar />
-      <div className="d-flex justify-content-center align-items-center mt-5">
-        <div className="card shadow p-4 w-100" style={{ maxWidth: "450px" }}>
-          <h2 className="text-center text-success mb-4">Create Account</h2>
-
-          {errorMsg && (
-            <div className="alert alert-danger text-center small py-2">
-              {errorMsg}
+    <div className="container mt-5">
+      <div className="row justify-content-center">
+        <div className="col-md-6">
+          <div className="card shadow-sm">
+            <div className="card-header bg-primary text-white text-center">
+              <h4>Signup</h4>
             </div>
-          )}
+            <div className="card-body">
+              <form onSubmit={handleSubmit}>
+                <div className="mb-3">
+                  <label className="form-label">Username</label>
+                  <input
+                    name="username"
+                    className="form-control"
+                    placeholder="Enter username"
+                    value={form.username}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
 
-          <form onSubmit={handleSignup}>
-            <div className="mb-3">
-              <input
-                type="text"
-                name="username"
-                placeholder="Username"
-                value={formData.username}
-                onChange={handleChange}
-                required
-                className="form-control"
-              />
+                <div className="mb-3">
+                  <label className="form-label">Email</label>
+                  <input
+                    name="email"
+                    type="email"
+                    className="form-control"
+                    placeholder="Enter email"
+                    value={form.email}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+
+                <div className="mb-3">
+                  <label className="form-label">Password</label>
+                  <input
+                    name="password"
+                    type="password"
+                    className="form-control"
+                    placeholder="Enter password"
+                    value={form.password}
+                    onChange={handleChange}
+                    required
+                    minLength={8}
+                  />
+                </div>
+
+                <div className="mb-3">
+                  <label className="form-label">Role</label>
+                  <select
+                    name="role"
+                    className="form-select"
+                    value={form.role}
+                    onChange={handleChange}
+                    required
+                  >
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                    <option value="employee">Employee</option>
+                  </select>
+                </div>
+
+                <button type="submit" className="btn btn-primary w-100">Signup</button>
+              </form>
             </div>
-
-            <div className="mb-3">
-              <input
-                type="email"
-                name="email"
-                placeholder="Email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                className="form-control"
-              />
-            </div>
-
-            <div className="mb-3">
-              <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-                className="form-control"
-              />
-            </div>
-
-            <div className="mb-3">
-              <select
-                name="role"
-                value={formData.role}
-                onChange={handleChange}
-                required
-                className="form-select"
-              >
-                <option value="user">User</option>
-                <option value="employee">Employee</option>
-                <option value="admin">Admin</option>
-              </select>
-            </div>
-
-            <button type="submit" className="btn btn-success w-100">
-              Sign Up
-            </button>
-          </form>
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

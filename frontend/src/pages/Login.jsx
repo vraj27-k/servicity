@@ -1,107 +1,113 @@
-// src/Login.jsx
-import React, { useState } from "react";
-import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
-import Navbar from "./components/Navbar";
+import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
+  const [form, setForm] = useState({
+    username: '',
+    password: ''
   });
+  const [loading, setLoading] = useState(false);
 
-  const [errorMsg, setErrorMsg] = useState("");
-
+  // Input change handler
   const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    });
   };
 
+  // Submit handler
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrorMsg("");
+    setLoading(true);
 
     try {
-      const res = await axios.post("http://localhost:8000/api/login/", formData);
+      // Login API
+      const res = await axios.post("http://127.0.0.1:8000/api/login/", {
+        username: form.username,
+        password: form.password
+      });
 
-      // ✅ Save session info
-      localStorage.setItem("username", res.data.username);
-      localStorage.setItem("role", res.data.role);
-      localStorage.setItem("user_id", res.data.user_id);
+      const { access, username, role, id } = res.data;
 
-      // ✅ Redirect after login
-      const redirectTo = localStorage.getItem("redirect_after_login");
-      if (redirectTo) {
-        localStorage.removeItem("redirect_after_login");
-        navigate(redirectTo);
+      // Save data to localStorage
+      localStorage.setItem("token", access);
+      localStorage.setItem("username", username);
+      localStorage.setItem("role", role);
+      localStorage.setItem("user_id", id);
+
+      // Check user role
+      if (role === "employee") {
+        const profileRes = await axios.get("http://127.0.0.1:8000/api/employee/profile-status/", {
+          headers: {
+            Authorization: `Bearer ${access}`
+          }
+        });
+
+        const isComplete = profileRes.data.profile_complete;
+        if (!isComplete) {
+          navigate("/employee/setup");
+        } else {
+          navigate("/employee/dashboard");
+        }
+      } else if (role === "admin") {
+        navigate("/admin-dashboard");
       } else {
-        const role = res.data.role;
-        if (role === "admin") navigate("/admin-dashboard");
-        else if (role === "employee") navigate("/employee-dashboard");
-        else navigate("/"); // regular user
+        // ✅ Check if redirect was stored before login
+        const redirectPath = localStorage.getItem("redirect_after_login");
+        if (redirectPath) {
+          localStorage.removeItem("redirect_after_login");
+          navigate(redirectPath);
+        } else {
+          navigate("/");
+        }
       }
+
     } catch (err) {
-      const msg = err.response?.data?.error || "Invalid credentials";
-      setErrorMsg("❌ " + msg);
+      console.error("Login error:", err.response?.data || err.message);
+      if (err.response?.status === 401) {
+        alert("Invalid username or password.");
+      } else {
+        alert("Server error. Please try again.");
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <>
-      <Navbar />
-      <div className="d-flex align-items-center justify-content-center min-vh-100 bg-light">
-        <div className="card shadow-sm p-4" style={{ maxWidth: "400px", width: "100%" }}>
-          <h2 className="text-center text-primary mb-4">Login</h2>
+    <form onSubmit={handleSubmit} className="container mt-5" style={{ maxWidth: "400px" }}>
+      <h3 className="text-center mb-4">Login</h3>
 
-          {errorMsg && (
-            <div className="alert alert-danger text-center py-2 small">{errorMsg}</div>
-          )}
-
-          <form onSubmit={handleSubmit}>
-            <div className="mb-3">
-              <input
-                type="text"
-                name="username"
-                placeholder="Username"
-                value={formData.username}
-                onChange={handleChange}
-                required
-                className="form-control"
-              />
-            </div>
-            <div className="mb-3">
-              <input
-                type="password"
-                name="password"
-                placeholder="Password"
-                value={formData.password}
-                onChange={handleChange}
-                required
-                className="form-control"
-              />
-            </div>
-            <button type="submit" className="btn btn-primary w-100">
-              Login
-            </button>
-          </form>
-
-          <p className="text-center mt-4 mb-1 small">
-            New user?{" "}
-            <Link to="/signup" className="text-decoration-none text-primary fw-medium">
-              Sign up here
-            </Link>
-          </p>
-          <p className="text-center small">
-            <Link to="/forgot-password" className="text-decoration-none text-primary">
-              Forgot Password?
-            </Link>
-          </p>
-        </div>
+      <div className="mb-3">
+        <input
+          className="form-control"
+          name="username"
+          placeholder="Username"
+          value={form.username}
+          onChange={handleChange}
+          required
+        />
       </div>
-    </>
+
+      <div className="mb-3">
+        <input
+          className="form-control"
+          name="password"
+          type="password"
+          placeholder="Password"
+          value={form.password}
+          onChange={handleChange}
+          required
+        />
+      </div>
+
+      <button type="submit" className="btn btn-primary w-100" disabled={loading}>
+        {loading ? "Logging in..." : "Login"}
+      </button>
+    </form>
   );
 };
 

@@ -20,16 +20,20 @@ const ConfirmBooking = () => {
     const cart = JSON.parse(localStorage.getItem("cart_services")) || [];
 
     const fetchServiceDetails = async () => {
-      const updated = await Promise.all(
-        cart.map(async item => {
-          const res = await axios.get(`http://localhost:8000/api/services/${item.service_id}/`);
-          return {
-            ...res.data,
-            selectedSubservices: item.subservices
-          };
-        })
-      );
-      setServices(updated);
+      try {
+        const updated = await Promise.all(
+          cart.map(async item => {
+            const res = await axios.get(`http://localhost:8000/api/services/${item.service_id}/`);
+            return {
+              ...res.data,
+              selectedSubservices: item.subservices
+            };
+          })
+        );
+        setServices(updated);
+      } catch (error) {
+        console.error("Failed to fetch services:", error);
+      }
     };
 
     fetchServiceDetails();
@@ -79,37 +83,65 @@ const ConfirmBooking = () => {
   };
 
   const handleBooking = async () => {
-    const userId = localStorage.getItem("user_id");
-    if (!userId) {
-      alert("Please log in first.");
-      return navigate("/login");
-    }
+  const { name, phone, address, date, time } = formData;
 
-    const { name, phone, address, date, time } = formData;
-    if (!name || !phone || !address || !date || !time) {
-      return alert("Please fill all required fields.");
-    }
+  if (!name || !phone || !address || !date || !time) {
+    return alert("Please fill all required fields.");
+  }
 
-    try {
-      for (let service of services) {
-        await axios.post("http://localhost:8000/api/bookings/", {
-          user: userId,
+  const userId = localStorage.getItem("user_id");
+  if (!userId) {
+    return alert("Please log in to continue.");
+  }
+
+  try {
+    const createdBookings = [];
+
+    for (let service of services) {
+      const response = await axios.post(
+        "http://localhost:8000/api/bookings/",
+        {
           service: service.id,
           subservices: service.selectedSubservices,
+          user: userId,
           ...formData,
           latitude: latLng?.lat,
           longitude: latLng?.lng,
-        });
-      }
+        }
+      );
 
-      localStorage.removeItem("cart_services");
-      alert("✅ Booking Confirmed!");
-      navigate("/my-bookings");
-    } catch (err) {
-      console.error(err);
-      alert("Booking failed");
+      createdBookings.push(response.data); // Store full booking data
     }
-  };
+
+    localStorage.removeItem("cart_services");
+
+    if (createdBookings.length > 0) {
+      const lastBooking = createdBookings[createdBookings.length - 1]; // get last
+      alert("✅ Booking confirmed!");
+
+      navigate(`/payment/deposit/${lastBooking.id}`, {
+        state: {
+          total: getGrandTotal(),
+          bookingId: lastBooking.id,
+          bookingDetails: lastBooking
+        }
+      });
+    } else {
+      alert("Booking failed: No booking was created.");
+    }
+  } catch (err) {
+    console.error("Booking failed", err.response || err);
+    alert(
+      `Booking failed: ${
+        err.response?.data?.detail ||
+        JSON.stringify(err.response?.data) ||
+        "Unknown error"
+      }`
+    );
+  }
+};
+
+
 
   const getTotalForService = (service) => {
     const base = parseFloat(service.price || 0);
@@ -127,7 +159,7 @@ const ConfirmBooking = () => {
   return (
     <div className="container py-4">
       <div className="row">
-        {/* LEFT SIDE FORM */}
+        {/* LEFT FORM */}
         <div className="col-md-8">
           <h3 className="mb-3">Confirm Your Booking</h3>
 
@@ -225,7 +257,6 @@ const ConfirmBooking = () => {
                 <h6>Grand Total: ₹{getGrandTotal().toFixed(2)}</h6>
               </>
             )}
-
           </div>
         </div>
       </div>

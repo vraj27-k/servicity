@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'core',
     'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
+    'rest_framework.authtoken', 
    
 
 ]
@@ -75,7 +76,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'backend.wsgi.application'
-
+AUTH_USER_MODEL = 'yourapp.CustomUser'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
@@ -90,6 +91,7 @@ DATABASES = {
     }
 }
 REST_FRAMEWORK = {
+    'EXCEPTION_HANDLER': 'rest_framework.views.exception_handler',
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
