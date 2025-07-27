@@ -1,0 +1,620 @@
+/* Base Styles */
+.book-service-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+}
+
+/* Loading and Error Pages */
+.loading-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-container {
+  text-align: center;
+  color: white;
+}
+
+.loading-text {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.loading-subtitle {
+  opacity: 0.8;
+}
+
+.error-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+}
+
+.error-container {
+  padding: 3rem;
+}
+
+/* Service Header */
+.service-header {
+  margin-bottom: 3rem;
+}
+
+.header-content h1 {
+  position: relative;
+}
+
+.header-content h1::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  border-radius: 2px;
+}
+
+.service-meta {
+  margin-top: 2rem;
+}
+
+.meta-badge {
+  background: white;
+  padding: 0.75rem 1.25rem;
+  border-radius: 25px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.meta-badge:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+/* Service Image Section */
+.service-image-section {
+  position: relative;
+}
+
+.image-container {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.service-main-image {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.image-container:hover .service-main-image {
+  transform: scale(1.05);
+}
+
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(102, 126, 234, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  color: white;
+  font-weight: 600;
+}
+
+.image-container:hover .image-overlay {
+  opacity: 1;
+}
+
+.overlay-content {
+  text-align: center;
+  transform: translateY(20px);
+  transition: transform 0.3s ease;
+}
+
+.image-container:hover .overlay-content {
+  transform: translateY(0);
+}
+
+/* Description Section */
+.description-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.description-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.1) !important;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: rgba(40, 167, 69, 0.1);
+  border-radius: 10px;
+  font-weight: 600;
+  color: #333;
+  transition: all 0.3s ease;
+}
+
+.feature-item:hover {
+  background: rgba(40, 167, 69, 0.2);
+  transform: translateY(-2px);
+}
+
+.feature-item i {
+  font-size: 1.5rem;
+}
+
+/* Service Groups */
+.service-group {
+  margin-bottom: 3rem;
+}
+
+.group-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid rgba(102, 126, 234, 0.1);
+}
+
+.group-title {
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.group-subtitle {
+  margin-bottom: 0;
+}
+
+/* Sub Service Cards */
+.sub-service-card {
+  transition: all 0.3s ease;
+  margin-bottom: 1rem;
+}
+
+.sub-service-card .card {
+  transition: all 0.3s ease;
+  border: 2px solid transparent !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.sub-service-card:hover .card {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.15) !important;
+}
+
+.sub-service-card.selected .card {
+  border-color: #28a745 !important;
+  background: linear-gradient(135deg, rgba(40, 167, 69, 0.05), rgba(32, 201, 151, 0.05));
+}
+
+.sub-image-wrapper {
+  position: relative;
+}
+
+.sub-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border: 3px solid #f8f9fa;
+  transition: transform 0.3s ease;
+}
+
+.sub-service-card:hover .sub-image {
+  transform: scale(1.1);
+}
+
+.image-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 28px;
+  height: 28px;
+  background: #ffc107;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.sub-details {
+  flex-grow: 1;
+}
+
+.sub-title {
+  color: #333;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.sub-description {
+  color: #666;
+  line-height: 1.4;
+}
+
+.price-currency {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.price-amount {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.toggle-btn {
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.toggle-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+.selection-indicator {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 1.5rem;
+  animation: bounceIn 0.6s ease;
+}
+
+/* Booking Sidebar */
+.booking-sidebar {
+  position: relative;
+}
+
+.booking-summary {
+  top: 2rem;
+}
+
+.summary-card {
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.summary-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15) !important;
+}
+
+.summary-header {
+  background: linear-gradient(45deg, #667eea, #764ba2) !important;
+  padding: 1.5rem;
+}
+
+/* Price Breakdown */
+.price-breakdown-section {
+  border-bottom: 1px solid #dee2e6;
+  padding-bottom: 1rem;
+}
+
+.price-item {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.price-item:last-child {
+  border-bottom: none;
+}
+
+.price-label {
+  color: #666;
+  font-weight: 600;
+}
+
+.price-value {
+  color: #333;
+  font-size: 1.1rem;
+}
+
+/* Selected Items */
+.selected-items-section {
+  border-bottom: 1px solid #dee2e6;
+  padding-bottom: 1rem;
+}
+
+.selected-title {
+  color: #333;
+}
+
+.selected-item {
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.selected-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.selected-item:hover {
+  background: rgba(0,0,0,0.02);
+  border-radius: 8px;
+  padding: 0.5rem;
+  margin: 0 -0.5rem 0.5rem;
+}
+
+.item-name {
+  color: #333;
+  font-weight: 500;
+}
+
+.item-price {
+  color: #28a745;
+  font-weight: 700;
+}
+
+.remove-btn {
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.remove-btn:hover {
+  transform: scale(1.1);
+  background-color: #dc3545 !important;
+  border-color: #dc3545 !important;
+  color: white !important;
+}
+
+/* Total Section */
+.total-section {
+  margin-bottom: 1.5rem;
+}
+
+.total-container {
+  border: 2px solid rgba(40, 167, 69, 0.2) !important;
+  transition: all 0.3s ease;
+}
+
+.total-container:hover {
+  border-color: rgba(40, 167, 69, 0.4) !important;
+  background: rgba(40, 167, 69, 0.05) !important;
+}
+
+.total-label {
+  color: #333;
+}
+
+.total-value {
+  color: #28a745;
+}
+
+/* Proceed Button */
+.proceed-btn {
+  border-radius: 15px;
+  padding: 1rem 2rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.proceed-btn:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(40, 167, 69, 0.4);
+}
+
+.proceed-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Offer Section */
+.offer-section .offer-card {
+  border-left: 4px solid #ffc107 !important;
+  transition: all 0.3s ease;
+}
+
+.offer-section .offer-card:hover {
+  transform: translateX(5px);
+  box-shadow: 0 5px 15px rgba(255, 193, 7, 0.2);
+}
+
+.offer-icon {
+  flex-shrink: 0;
+}
+
+.offer-title {
+  color: #333;
+  margin-bottom: 0.25rem;
+}
+
+.offer-desc {
+  color: #666;
+  margin-bottom: 0;
+}
+
+/* Why Choose Section */
+.why-choose-section {
+  background: rgba(102, 126, 234, 0.05);
+  padding: 1.5rem;
+  border-radius: 15px;
+  border: 1px solid rgba(102, 126, 234, 0.1);
+}
+
+.why-title {
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.why-item {
+  transition: all 0.3s ease;
+  padding: 0.25rem 0;
+}
+
+.why-item:hover {
+  transform: translateX(5px);
+  color: #28a745;
+}
+
+/* Animations */
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  from { 
+    opacity: 0; 
+    transform: translateY(20px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0; 
+    transform: translateY(30px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+@keyframes slideLeft {
+  from { 
+    opacity: 0; 
+    transform: translateX(30px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateX(0); 
+  }
+}
+
+@keyframes fadeInItem {
+  from { 
+    opacity: 0; 
+    transform: scale(0.9); 
+  }
+  to { 
+    opacity: 1; 
+    transform: scale(1); 
+  }
+}
+
+/* Animation Classes */
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out both;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.8s ease-out both;
+}
+
+.animate-slide-left {
+  animation: slideLeft 0.8s ease-out 0.2s both;
+}
+
+.animate-fade-in-item {
+  animation: fadeInItem 0.5s ease-out both;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .service-main-image {
+    height: 250px;
+  }
+
+  .service-meta {
+    flex-direction: column;
+    gap: 1rem !important;
+  }
+
+  .meta-badge {
+    width: 100%;
+    text-align: center;
+  }
+
+  .sub-service-card .card-body .d-flex {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .booking-summary {
+    position: static !important;
+    margin-top: 2rem;
+  }
+
+  .feature-item {
+    flex-direction: column;
+    text-align: center;
+    padding: 0.75rem;
+  }
+
+  .selected-item .d-flex {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 0.5rem;
+  }
+
+  /* Disable hover animations on mobile */
+  .sub-service-card:hover .card,
+  .summary-card:hover,
+  .description-card:hover,
+  .image-container:hover .service-main-image {
+    transform: none;
+  }
+}
+
+/* Performance optimizations */
+.sub-service-card .card,
+.summary-card,
+.service-main-image,
+.toggle-btn {
+  will-change: transform;
+  backface-visibility: hidden;
+}

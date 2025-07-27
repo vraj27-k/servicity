@@ -1,0 +1,609 @@
+/* Base Styles */
+.confirm-booking-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  position: relative;
+}
+
+/* Page Header */
+.page-header {
+  margin-bottom: 3rem;
+}
+
+.header-content {
+  position: relative;
+}
+
+.header-icon {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 2rem;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.header-icon i {
+  font-size: 2.5rem;
+  color: white;
+}
+
+.page-title {
+  color: #333;
+  position: relative;
+}
+
+.page-title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  border-radius: 2px;
+}
+
+.gradient-text {
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.page-subtitle {
+  color: #666;
+  margin-top: 2rem;
+}
+
+/* Form Section */
+.booking-form-section {
+  margin-bottom: 2rem;
+}
+
+.form-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+.form-card-header {
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  color: white;
+  padding: 2rem;
+  text-align: center;
+}
+
+.form-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.form-subtitle {
+  margin: 0;
+  opacity: 0.9;
+  font-size: 0.95rem;
+}
+
+.form-card-body {
+  padding: 2.5rem;
+}
+
+/* Form Sections */
+.form-section {
+  margin-bottom: 3rem;
+}
+
+.section-title {
+  color: #333;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid rgba(102, 126, 234, 0.1);
+  display: flex;
+  align-items: center;
+}
+
+/* Form Groups */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  color: #555;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: block;
+  font-size: 0.9rem;
+}
+
+.input-container {
+  position: relative;
+}
+
+.form-input, .form-textarea {
+  background: rgba(248, 249, 250, 0.8);
+  border: 2px solid rgba(102, 126, 234, 0.15);
+  border-radius: 12px;
+  padding: 1rem 1rem 1rem 3.5rem;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.form-input:focus, .form-textarea:focus {
+  background: white;
+  border-color: #667eea;
+  box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.15);
+  transform: translateY(-2px);
+  outline: none;
+}
+
+.input-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #667eea;
+  font-size: 1.1rem;
+  z-index: 2;
+}
+
+.input-underline {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  transition: width 0.3s ease;
+  border-radius: 1px;
+}
+
+.form-input:focus ~ .input-underline,
+.form-textarea:focus ~ .input-underline {
+  width: 100%;
+}
+
+/* Map Section */
+.map-section {
+  margin-bottom: 1.5rem;
+}
+
+.map-container {
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  border: 2px solid rgba(102, 126, 234, 0.1);
+}
+
+/* Error Messages */
+.error-text {
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  animation: slideDown 0.3s ease;
+}
+
+/* Form Actions */
+.form-actions {
+  margin-top: 2.5rem;
+}
+
+.btn-confirm-booking {
+  background: linear-gradient(45deg, #28a745, #20c997);
+  border: none;
+  color: white;
+  padding: 1rem 3rem;
+  border-radius: 25px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  min-width: 250px;
+}
+
+.btn-confirm-booking:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(40, 167, 69, 0.4);
+  color: white;
+}
+
+.btn-confirm-booking:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Cart Section */
+.cart-section {
+  position: relative;
+}
+
+.cart-summary {
+  top: 2rem;
+}
+
+.cart-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cart-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+}
+
+.cart-header {
+  background: linear-gradient(45deg, #28a745, #20c997);
+  color: white;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cart-title {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.cart-badge {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.cart-content {
+  padding: 1.5rem;
+}
+
+/* Empty Cart State */
+.empty-cart-state {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.empty-cart-icon {
+  font-size: 4rem;
+  color: #dee2e6;
+  margin-bottom: 1rem;
+}
+
+.empty-cart-text {
+  color: #6c757d;
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+}
+
+/* Cart Items */
+.cart-items {
+  margin-bottom: 1.5rem;
+}
+
+.cart-item {
+  background: #f8f9fa;
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  border-left: 4px solid #667eea;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.cart-item:hover {
+  transform: translateX(5px);
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+  background: #f0f8f4;
+}
+
+.cart-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.item-name {
+  color: #333;
+  font-weight: 700;
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.btn-remove-service {
+  background: #dc3545;
+  border: none;
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.btn-remove-service:hover {
+  background: #c82333;
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
+}
+
+/* Subservices */
+.cart-item-subservices {
+  margin-bottom: 1rem;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.subservice-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.subservice-item:last-child {
+  border-bottom: none;
+}
+
+.subservice-details {
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 1;
+  margin-right: 1rem;
+}
+
+.subservice-name {
+  color: #555;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.subservice-price {
+  color: #28a745;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.btn-remove-subservice {
+  background: none;
+  border: none;
+  color: #dc3545;
+  padding: 0.2rem;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.btn-remove-subservice:hover {
+  background: rgba(220, 53, 69, 0.1);
+  transform: scale(1.2);
+}
+
+.cart-item-total {
+  text-align: right;
+  color: #333;
+  font-size: 1rem;
+  padding-top: 1rem;
+  border-top: 2px solid rgba(40, 167, 69, 0.2);
+  background: rgba(40, 167, 69, 0.05);
+  margin: 1rem -1.5rem -1.5rem;
+  padding: 1rem 1.5rem;
+}
+
+/* Cart Footer */
+.cart-footer {
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  margin: 1.5rem -1.5rem -1.5rem;
+  padding: 2rem 1.5rem;
+  border-top: 2px solid rgba(102, 126, 234, 0.2);
+}
+
+.grand-total-section {
+  text-align: center;
+}
+
+.grand-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.grand-total-label {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #333;
+}
+
+.grand-total-amount {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #28a745;
+}
+
+.total-note {
+  font-size: 0.85rem;
+  color: #6c757d;
+  margin-top: 0.5rem;
+}
+
+/* Animations */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { 
+    opacity: 0; 
+    transform: translateY(20px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0; 
+    transform: translateY(30px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+@keyframes slideLeft {
+  from { 
+    opacity: 0; 
+    transform: translateX(30px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateX(0); 
+  }
+}
+
+@keyframes fadeInItem {
+  from { 
+    opacity: 0; 
+    transform: scale(0.95); 
+  }
+  to { 
+    opacity: 1; 
+    transform: scale(1); 
+  }
+}
+
+/* Animation Classes */
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out both;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.8s ease-out both;
+}
+
+.animate-slide-left {
+  animation: slideLeft 0.8s ease-out 0.2s both;
+}
+
+.animate-fade-in-item {
+  animation: fadeInItem 0.5s ease-out both;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .page-title {
+    font-size: 2.5rem;
+  }
+
+  .header-icon {
+    width: 60px;
+    height: 60px;
+  }
+
+  .header-icon i {
+    font-size: 2rem;
+  }
+
+  .form-card-header,
+  .form-card-body {
+    padding: 1.5rem;
+  }
+
+  .cart-summary {
+    position: static !important;
+    margin-top: 2rem;
+  }
+
+  .form-section {
+    margin-bottom: 2rem;
+  }
+
+  .btn-confirm-booking {
+    width: 100%;
+    min-width: auto;
+  }
+
+  .form-input, .form-textarea {
+    padding: 0.8rem 0.8rem 0.8rem 3rem;
+  }
+
+  .input-icon {
+    left: 0.8rem;
+  }
+
+  .cart-item-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .subservice-details {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  /* Disable some hover effects on mobile */
+  .form-card:hover,
+  .cart-card:hover {
+    transform: none;
+  }
+}
+
+/* Performance optimizations */
+.form-card,
+.cart-card,
+.cart-item {
+  will-change: transform;
+  backface-visibility: hidden;
+}

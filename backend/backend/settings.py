@@ -115,7 +115,10 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
+import sys
+import os
+sys.path.append(os.path.join(BASE_DIR, 'ml'))
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/

@@ -6,10 +6,11 @@ import Services from "./pages/Services";
 import ForgotPassword from "./ForgotPassword";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import AdminDashboard from "./pages/AdminDashboard";
 import BookService from "./pages/BookService";
 import ConfirmBooking from "./pages/ConfirmBooking";
 import DepositPayment from "./pages/DepositPayment"; // ✅ Correct import
+import AdminLogin from './pages/components/AdminLogin';
+import AdminDashboard from './pages/components/AdminDashboard';
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/admin-login" element={<AdminLogin />} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/confirm-booking/:id" element={<ConfirmBooking />} />
         <Route path="/payment/deposit/:bookingId" element={<DepositPayment />} />

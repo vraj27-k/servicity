@@ -1,0 +1,242 @@
+/* Hero Section - Simplified */
+.hero-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.hero-title {
+  color: white;
+}
+
+.hero-subtitle {
+  opacity: 0.9;
+}
+
+/* Search Container */
+.search-container {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.search-container .input-group-text {
+  background: white;
+  border: none;
+  color: #667eea;
+  border-radius: 25px 0 0 25px;
+}
+
+.search-container .form-control {
+  border: none;
+  border-radius: 0 25px 25px 0;
+  padding: 1rem 1.5rem;
+  font-size: 1.1rem;
+}
+
+.search-container .form-control:focus {
+  box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+/* Services Section */
+.services-section {
+  background: linear-gradient(to bottom, #f8f9fa, #ffffff);
+}
+
+/* Service Cards - Optimized */
+.service-card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+/* Card Header */
+.card-header {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  z-index: 3;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.category-badge {
+  background: rgba(255,255,255,0.9);
+  color: #667eea;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.rating-badge {
+  background: rgba(255,193,7,0.9);
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* Image Wrapper */
+.image-wrapper {
+  height: 200px;
+  overflow: hidden;
+}
+
+.service-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.service-card:hover .service-image {
+  transform: scale(1.05);
+}
+
+/* Card Body */
+.card-body {
+  padding: 2rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.service-title {
+  color: #333;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.service-description {
+  color: #666;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+  font-size: 0.9rem;
+}
+
+/* Features */
+.service-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.feature-tag {
+  background: rgba(102, 126, 234, 0.1);
+  color: #667eea;
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* Price */
+.service-price {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.price-text {
+  background: linear-gradient(45deg, #28a745, #20c997);
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 1rem;
+  display: inline-block;
+}
+
+/* CTA Section */
+.cta-section {
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  padding: 5rem 0;
+  color: white;
+}
+
+.cta-section h2 {
+  margin-bottom: 2rem;
+}
+
+.cta-section p {
+  opacity: 0.9;
+  margin-bottom: 3rem;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .hero-section {
+    min-height: 50vh;
+    padding: 2rem 0;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+
+  .search-container {
+    margin: 0 1rem;
+  }
+
+  .service-card {
+    margin-bottom: 2rem;
+  }
+
+  .card-body {
+    padding: 1.5rem;
+  }
+
+  .cta-section .d-flex {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .cta-section .btn {
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 1rem;
+  }
+}
+
+/* Remove heavy animations on mobile */
+@media (max-width: 768px) {
+  .service-card:hover {
+    transform: none;
+  }
+  
+  .service-card:hover .service-image {
+    transform: none;
+  }
+}
+
+/* Optimize for better performance */
+.service-card {
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.service-image {
+  will-change: transform;
+  backface-visibility: hidden;
+}
